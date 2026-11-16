@@ -1,11 +1,17 @@
 // ==UserScript==
-// @name         FJMU自动评教助手
-// @namespace    http://tampermonkey.net/
+// @name         FJMU自动评教助手 v3
+// @namespace    https://github.com/RevieNeal/fjmueval-userscript
 // @version      3.1.1
 // @description  仅适用于福建医科大学评教系统 https://jxzhpt.webvpn.fjmu.edu.cn/static/home/ —— 自动识别列表页/表单页（含 SPA 抽屉），跨页面自动巡航：点「去填写」→ 填分（可随机浮动）→ 提交 → 确认弹窗 → 回列表继续；可停止、可只填不交
 // @author       Neal
 // @copyright    Neal
-// @homepage     https://jxzhpt.webvpn.fjmu.edu.cn/static/home/
+// @license      MIT
+// @original-author   deepseek+lzy, p1nappollo
+// @original-license  none（原作者未声明许可证，版权归原作者所有）
+// @original-script   https://scriptcat.org/zh-CN/script-show-page/5233
+// @homepage     https://github.com/RevieNeal/fjmueval-userscript
+// @supportURL   https://github.com/RevieNeal/fjmueval-userscript/issues
+// @source       https://github.com/RevieNeal/fjmueval-userscript
 // @match        *://*.jxzhpt.webvpn.fjmu.edu.cn/*
 // @match        *://jxzhpt.webvpn.fjmu.edu.cn/*
 // @match        *://*.jxzhpt.fjmu.edu.cn/*

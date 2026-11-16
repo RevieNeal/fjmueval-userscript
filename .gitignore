@@ -1,0 +1,19 @@
+# 依赖
+node_modules/
+.pnpm-store/
+
+# 测试产物
+tests/last.log
+coverage/
+
+# 编辑器 / 系统
+.vscode/
+.idea/
+*.swp
+Thumbs.db
+desktop.ini
+
+# 日志与临时文件
+*.log
+!tests/expected/*.log
+tmp/

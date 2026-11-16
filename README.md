@@ -1,12 +1,39 @@
-﻿# FJMU 自动评教助手 · v3.1.1
+# FJMU 自动评教助手 · v3.1.1
 
 针对福医大评教系统（`jxzhpt.webvpn.fjmu.edu.cn`）重写的油猴脚本。基于 ScriptCat 上的
 [FJMU自动评教助手 v2.2](https://scriptcat.org/zh-CN/script-show-page/5233) 修复，原版问题清单见
 [BUGS-v2.2.md](BUGS-v2.2.md)。
 
-- 新脚本：[src/FJMU自动评教助手.v3.1.1.user.js](src/FJMU自动评教助手.v3.1.1.user.js)
+- 新脚本：[src/fjmueval.user.js](src/fjmueval.user.js)
 - 原版备份：[original/fjmueval-v2.2.user.js](original/fjmueval-v2.2.user.js)
 - 测试：`node tests/run.js`（jsdom 模拟页面，32 项断言全过）
+
+---
+
+## 🚀 一键安装
+
+> 需要先装 [ScriptCat](https://scriptcat.org/) 或 [Tampermonkey](https://www.tampermonkey.net/) 扩展。
+> 脚本**只匹配福医大评教系统的域名**，装到别的站点上不会激活。
+
+| 线路 | 安装地址 |
+|---|---|
+| GitHub 直连 | [fjmueval.user.js](https://raw.githubusercontent.com/YOUR_GITHUB_ID/fjmueval-userscript/main/src/fjmueval.user.js) |
+| jsDelivr 国内加速 | [fjmueval.user.js](https://cdn.jsdelivr.net/gh/YOUR_GITHUB_ID/fjmueval-userscript@main/src/fjmueval.user.js) |
+
+点开链接，扩展会弹出安装页，点「安装」即可。国内访问 `raw.githubusercontent.com` 常被墙，
+优先用 jsDelivr 那条。
+
+<details>
+<summary>手动安装（一键链接打不开时）</summary>
+
+1. 打开 ScriptCat / Tampermonkey 的「管理面板」→「新建脚本」。
+2. 清空模板，把 `src/fjmueval.user.js` 全文粘进去，保存。
+   （或者直接把 `.user.js` 文件拖进浏览器窗口，扩展会弹出安装页。）
+3. 打开评教系统，右上角出现「🎯 自动评教 v3.1.1」面板即成功。
+
+</details>
+
+> 若你的系统域名不是 `*.jxzhpt.webvpn.fjmu.edu.cn`，把文件头部的 `@match` 改成实际域名再保存。
 
 ---
 
@@ -54,16 +81,7 @@ div.range > ... > input.range-slider-hidden               滑块
 4. 提交后若界面不自动关 → 读页面 toast → 点抽屉「返回」回收；有"成功"字样按成功处理
 5. `goFillButtons()` 加 800ms 缓存，67 门课也不会每 1.5 秒全量扫一遍
 
-## 一、安装
-
-1. 打开 ScriptCat / Tampermonkey 的「管理面板」→「新建脚本」。
-2. 清空模板，把 `src/FJMU自动评教助手.v3.1.1.user.js` 全文粘进去，保存。
-   （或者直接把 `.user.js` 文件拖进浏览器窗口，扩展会弹出安装页。）
-3. 打开评教系统，右上角出现「🎯 自动评教 v3.1.1」面板即成功。
-
-> 若你的系统域名不是 `*.jxzhpt.webvpn.fjmu.edu.cn`，把文件头部的 `@match` 改成实际域名再保存。
-
-## 二、使用
+## 一、使用
 
 ```
 列表页 → 点「▶ 开始巡航」
@@ -109,9 +127,9 @@ div.range > ... > input.range-slider-hidden               滑块
 - 同一个表单页提交后 2 分钟内不会重复提交；回到列表页自动解除保护。
 - 点「去填写」后 5 秒内页面没反应，会把该课程标记为跳过（最多跳过 20 门），不会死循环点同一门。
 
-## 三、和 v2.2 的差别
+## 二、和 v2.2 的差别
 
-| 维度 | v2.2 | v3.0 |
+| 维度 | v2.2 | v3.1.1 |
 |---|---|---|
 | 跨课程流程 | 单页面 `while` 循环，跳转即失效 | 跨页面状态机（GM 存储 + 页面 token） |
 | 点击 | 一次动作触发 3–5 个 click 事件 | 严格单击，弹窗最多点 1 次 |
@@ -122,21 +140,21 @@ div.range > ... > input.range-slider-hidden               滑块
 | 失败处理 | 失败也 `return true` | 失败计数 + 熔断，状态如实上报 |
 | 页面改版 | 直接失效 | 多路兜底 + 「诊断」导出结构 |
 
-## 四、如果还是跑不通
+## 三、如果还是跑不通
 
 我无法登录校内 WebVPN，所以 `rater_input` / `#scroll_N` / `.fscore` / `button.submitbtn` /
 `.weui-dialog__btn_primary` 这套结构是沿用 v2.2 的假定（作者应该是对着真实页面写的，大概率仍然有效），
 但**没有在真实页面验证过**。如果某一步日志报「没找到评分输入框」或「没找到提交按钮」：
 
 1. 在出问题的那一页点面板上的「诊断 / 导出」。
-2. 把复制到的文本发给我，我按真实 DOM 重新适配选择器。
+2. 把复制到的文本发到 Issues 里，我按真实 DOM 重新适配选择器。
 
 日志里每一步都有时间戳，报错也都是中文，直接照抄给我最快。
 
-## 五、代码结构
+## 四、代码结构
 
 ```
-src/FJMU自动评教助手.v3.1.1.user.js
+src/fjmueval.user.js
 ├── 0. 常量与默认配置
 ├── 1. 存储层（GM_setValue 优先，退回 sessionStorage，带 6 小时过期）
 ├── 2. 小工具（sleep / waitFor / isVisible / clickOnce / nativeSetValue）
@@ -152,3 +170,16 @@ src/FJMU自动评教助手.v3.1.1.user.js
 
 调试入口：控制台里 `__MFEVAL__` 暴露了 `cfg`、`DOM`、`actions`、`getState()`，
 例如 `__MFEVAL__.cfg.autoSubmit = false` 可以临时改配置。
+
+## 五、开发与测试
+
+```bash
+npm install        # 只有 jsdom 一个依赖
+node tests/run.js  # 32 项断言，全过即 OK
+```
+
+## 免责声明
+
+本脚本仅供**学习浏览器自动化（DOM 操作、跨页面状态机、iframe 交互）**使用。
+评教是学生表达真实教学意见的渠道，各校通常要求本人如实填写；使用者需自行判断并承担
+由自动化操作带来的全部后果。作者不对任何账号异常、成绩争议或纪律处理负责。

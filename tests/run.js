@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const { JSDOM } = require('jsdom');
 
-const SRC = fs.readFileSync(path.join(__dirname, '..', 'src', 'FJMU自动评教助手.v3.1.1.user.js'), 'utf8');
+const SRC = fs.readFileSync(path.join(__dirname, '..', 'src', 'fjmueval.user.js'), 'utf8');
 const K_STATE = 'MFEVAL3_STATE';
 
 let pass = 0, fail = 0;

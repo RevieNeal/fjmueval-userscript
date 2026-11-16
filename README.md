@@ -17,8 +17,8 @@
 
 | 线路 | 安装地址 |
 |---|---|
-| GitHub 直连 | [fjmueval.user.js](https://raw.githubusercontent.com/YOUR_GITHUB_ID/fjmueval-userscript/main/src/fjmueval.user.js) |
-| jsDelivr 国内加速 | [fjmueval.user.js](https://cdn.jsdelivr.net/gh/YOUR_GITHUB_ID/fjmueval-userscript@main/src/fjmueval.user.js) |
+| GitHub 直连 | [fjmueval.user.js](https://raw.githubusercontent.com/RevieNeal/fjmueval-userscript/main/src/fjmueval.user.js) |
+| jsDelivr 国内加速 | [fjmueval.user.js](https://cdn.jsdelivr.net/gh/RevieNeal/fjmueval-userscript@main/src/fjmueval.user.js) |
 
 点开链接，扩展会弹出安装页，点「安装」即可。国内访问 `raw.githubusercontent.com` 常被墙，
 优先用 jsDelivr 那条。

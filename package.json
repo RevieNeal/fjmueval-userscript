@@ -1,17 +1,31 @@
 {
   "name": "fjmueval-userscript",
-  "version": "1.0.0",
-  "description": "FJMU 自动评教助手 v3.0 (userscript)",
-  "main": "index.js",
+  "version": "3.1.1",
+  "description": "FJMU 自动评教助手 v3.1.1：福建医科大学评教系统油猴脚本（自动填分 / 随机浮动 / 跨页巡航 / 诊断导出）",
+  "main": "src/fjmueval.user.js",
   "directories": {
     "test": "tests"
   },
   "scripts": {
     "test": "node tests/run.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "userscript",
+    "tampermonkey",
+    "scriptcat",
+    "fjmu",
+    "油猴脚本"
+  ],
+  "author": "Neal",
+  "license": "MIT",
+  "homepage": "https://github.com/RevieNeal/fjmueval-userscript#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RevieNeal/fjmueval-userscript.git"
+  },
+  "bugs": {
+    "url": "https://github.com/RevieNeal/fjmueval-userscript/issues"
+  },
   "dependencies": {
     "jsdom": "^24.1.3"
   },

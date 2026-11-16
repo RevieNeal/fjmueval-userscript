@@ -5,8 +5,8 @@
 [BUGS-v2.2.md](BUGS-v2.2.md)。
 
 - 新脚本：[src/fjmueval.user.js](src/fjmueval.user.js)
-- 原版备份：[original/fjmueval-v2.2.user.js](original/fjmueval-v2.2.user.js)
-- 测试：`node tests/run.js`（jsdom 模拟页面，32 项断言全过）
+- 原版：[original/fjmueval-v2.2.user.js](original/fjmueval-v2.2.user.js)
+- 测试：`node tests/run.js`（jsdom 模拟页面，73 项断言全过）
 
 ---
 
@@ -14,6 +14,9 @@
 
 > 需要先装 [ScriptCat](https://scriptcat.org/) 或 [Tampermonkey](https://www.tampermonkey.net/) 扩展。
 > 脚本**只匹配福医大评教系统的域名**，装到别的站点上不会激活。
+
+> **装过 v2.2（脚本 #5233）的同学，请先卸载它再装本脚本。** 两者都会操作同一个评教页面，
+> 同时启用会互相干扰。
 
 | 线路 | 安装地址 |
 |---|---|
@@ -84,8 +87,8 @@ div.range > ... > input.range-slider-hidden               滑块
 ## 一、使用
 
 ```
-列表页 → 点「▶ 开始巡航」
-        → 自动点第一个「去填写」
+列表页  → 点第一个「去填写」
+        → 点「▶ 开始巡航」
         → 跳转后自动填分（可关掉自动提交，先只填一门看看）
         → 提交 → 自动点「确定」
         → 回到列表继续下一门 …… 直到没有「去填写」按钮
@@ -102,7 +105,7 @@ div.range > ... > input.range-slider-hidden               滑块
 | 随机浮动 | 每门课在滑块基准线上抖动，总分落在 (84,95)，单项不低于满分 60% |
 | ▶ 开始巡航 | 清空计数重新开始，状态可跨页面保持 |
 | ■ 停止 | 随时停，状态保留，刷新页面后不会自己乱跑 |
-| 填写当前页 | 只填当前表单，不提交 |
+| 填写当前页 | 只填当前表单，不进行提交和保存，需要手动点击 |
 | 诊断 / 导出 | 把当前页面的元素结构摘要复制到剪贴板（页面改版时用） |
 
 
@@ -116,7 +119,7 @@ div.range > ... > input.range-slider-hidden               滑块
 - **日志**：每门都会打印实际使用的分数，例如
   `随机浮动：26.5 / 18 / 15.5 / 12.5 / 15，合计 87.5`
 
-算法不是"随便撒点"，而是：先定目标总分 → 按基准比例缩放 → 叠加一组零和扰动（各有差异但总和不变）→ 取整后把偏差补回 → 校验不通过就重新生成。区间和下限写在 `DEFAULT_CFG` 的 `randMin` / `randMax` 里，想改直接改这两个数。
+该算法是：先定目标总分 → 按基准比例缩放 → 叠加一组零和扰动（各有差异但总和不变）→ 取整后把偏差补回 → 校验不通过就重新生成。区间和下限写在 `DEFAULT_CFG` 的 `randMin` / `randMax` 里，想改直接改这两个数。
 
 面板可拖动，`–` 折叠，`×` 关掉后在右下角留一个 🐟 悬浮块唤回。
 
@@ -142,7 +145,7 @@ div.range > ... > input.range-slider-hidden               滑块
 
 ## 三、如果还是跑不通
 
-我无法登录校内 WebVPN，所以 `rater_input` / `#scroll_N` / `.fscore` / `button.submitbtn` /
+DSH无法登录校内 WebVPN，所以 `rater_input` / `#scroll_N` / `.fscore` / `button.submitbtn` /
 `.weui-dialog__btn_primary` 这套结构是沿用 v2.2 的假定（作者应该是对着真实页面写的，大概率仍然有效），
 但**没有在真实页面验证过**。如果某一步日志报「没找到评分输入框」或「没找到提交按钮」：
 
@@ -175,7 +178,7 @@ src/fjmueval.user.js
 
 ```bash
 npm install        # 只有 jsdom 一个依赖
-node tests/run.js  # 32 项断言，全过即 OK
+node tests/run.js  # 73 项断言，全过即 OK
 ```
 
 ## 免责声明
@@ -183,3 +186,4 @@ node tests/run.js  # 32 项断言，全过即 OK
 本脚本仅供**学习浏览器自动化（DOM 操作、跨页面状态机、iframe 交互）**使用。
 评教是学生表达真实教学意见的渠道，各校通常要求本人如实填写；使用者需自行判断并承担
 由自动化操作带来的全部后果。作者不对任何账号异常、成绩争议或纪律处理负责。
+同时在此表示对教务处的赞扬和肯定。希望盲猜哥能把FJMU的考研分数打下来一些。
